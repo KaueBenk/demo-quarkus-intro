@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiros Passos com Quarkus</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/tokyo-night-dark.min.css">
+    <style>
+        :root {
+            --r-background-color: #1a1b26;
+            --r-main-color: #c0caf5;
+            --r-heading-color: #7aa2f7;
+            --r-heading-text-transform: none;
+            --r-heading-letter-spacing: 0.04em;
+            --r-link-color: #7dcfff;
+            --r-link-color-hover: #bb9af7;
+            --r-selection-background-color: rgba(187, 154, 247, 0.4);
+            --r-selection-color: #c0caf5;
+            --r-block-margin: 6px;
+            --r-heading-margin: 0 0 6px 0;
+            --r-main-font-size: 32px;
+            --r-heading1-size: 2em;
+            --r-heading2-size: 1.3em;
+            --r-heading3-size: 1.05em;
+            --r-heading4-size: 0.9em;
+        }
+
+        .reveal-viewport { background: var(--r-background-color); }
+
+        .reveal .slides section {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .reveal p, .reveal li {
+            letter-spacing: 0.03em;
+            word-spacing: 0.05em;
+        }
+
+        .reveal strong { color: #ff9e64; }
+        .reveal em { color: #bb9af7; }
+
+        .reveal h1 { border-bottom: 2px solid #bb9af7; padding-bottom: 4px; }
+        .reveal h2 { color: #7dcfff; }
+        .reveal h3 { color: #9ece6a; }
+
+        .reveal pre {
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #3b4261;
+            border-radius: 8px;
+        }
+
+        .reveal pre code { background: #24283b; color: #c0caf5; }
+
+        .reveal code {
+            color: #ff9e64;
+            background: #24283b;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .reveal blockquote {
+            border-left: 3px solid #bb9af7;
+            background: #24283b;
+            border-radius: 0 8px 8px 0;
+            padding: 8px 16px;
+            color: #565f89;
+            font-style: normal;
+            box-shadow: none;
+        }
+
+        .reveal blockquote p { color: #c0caf5; }
+
+        .reveal table th { color: #bb9af7; }
+        .reveal table th, .reveal table td { border-color: #3b4261; }
+
+        .reveal .slide-number { color: #565f89; background: transparent; }
+        .reveal .progress { color: #7aa2f7; }
+        .reveal .controls { color: #565f89; }
+        .reveal .controls:hover { color: #7aa2f7; }
+
+        .hljs { background: transparent !important; }
+
+        .lang-toggle {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            display: flex;
+            gap: 4px;
+        }
+        .lang-toggle a {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-family: Source Sans Pro, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid #3b4261;
+            color: #565f89;
+            background: #1a1b26;
+            transition: all 0.2s ease;
+        }
+        .lang-toggle a:hover {
+            color: #c0caf5;
+            border-color: #7aa2f7;
+        }
+        .lang-toggle a.active {
+            color: #1a1b26;
+            background: #7aa2f7;
+            border-color: #7aa2f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-toggle">
+        <a id="lang-pt" href="?lang=pt">PT</a>
+        <a id="lang-en" href="?lang=en">EN</a>
+    </div>
+
+    <div class="reveal">
+        <div class="slides" data-separator="^---$" data-separator-vertical="^--->$">
+            <section id="markdown-slide"></section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+    <script>
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang') || 'pt';
+            const mdFile = lang === 'en' ? 'slides.en.md' : 'slides.pt.md';
+
+            document.getElementById('lang-pt').classList.toggle('active', lang === 'pt');
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-pt').href = '?lang=pt';
+            document.getElementById('lang-en').href = '?lang=en';
+
+            document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
+
+            const section = document.getElementById('markdown-slide');
+            section.setAttribute('data-markdown', mdFile);
+
+            Reveal.initialize({
+                plugins: [RevealMarkdown, RevealHighlight],
+                width: 1280,
+                height: 720,
+                margin: 0.04,
+                minScale: 0.2,
+                maxScale: 2.0,
+                hash: true,
+                slideNumber: true,
+                center: false
+            });
+        })();
+    </script>
+</body>
+</html>
