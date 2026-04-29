@@ -50,4 +50,8 @@ public class Talk extends PanacheEntity {
     public static List<Talk> findByLevel(Level level) {
         return list("level", level);
     }
+
+    public static List<Talk> findBySpeaker(String speaker) {
+        return list("speaker", speaker);
+    }
 }

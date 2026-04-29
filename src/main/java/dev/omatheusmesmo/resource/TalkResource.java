@@ -1,6 +1,7 @@
 package dev.omatheusmesmo.resource;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import dev.omatheusmesmo.dto.TalkRequest;
@@ -25,6 +26,18 @@ public class TalkResource {
     @GET
     public List<TalkResponse> list() {
         return Talk.<Talk>listAll().stream()
+                .map(TalkResponse::from)
+                .toList();
+    }
+
+    @GET
+    @Path("/speaker/{name}")
+    public List<TalkResponse> get(@PathParam("name") String name) {
+        var talks = Talk.findBySpeaker(name);
+        if (talks.isEmpty()) {
+            throw new NotFoundException();
+        }
+        return talks.stream()
                 .map(TalkResponse::from)
                 .toList();
     }
